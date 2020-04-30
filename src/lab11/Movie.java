@@ -1,6 +1,6 @@
 package lab11;
 
-public class Movie {
+public class Movie implements Comparable<Movie> {
 	
 	private String movieName;
 	private String genre;
@@ -16,5 +16,11 @@ public class Movie {
 	
 	public String getGenre() {
 		return genre;
+	}
+
+	@Override
+	public int compareTo(Movie o) {
+		
+		return this.movieName.compareTo(o.getMovieName());
 	}
 }

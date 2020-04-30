@@ -1,6 +1,8 @@
 package lab11;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -52,8 +54,11 @@ public class MovieApplication {
 				if (menu.containsKey(genreNumber)) {
 					String genreName = menu.get(genreNumber);
 					List<Movie> allMovies = allMoviesList();
-
-					filterMovies(allMovies, genreName);
+					List<Movie> movieList = filterMovies(allMovies, genreName);
+					Collections.sort(movieList);
+					for (Movie movie : movieList) {
+						System.out.println(movie.getMovieName());
+					}
 
 					System.out.print("Continue? (y/n) ");
 					String answer = scnr.nextLine().toLowerCase();
@@ -61,6 +66,7 @@ public class MovieApplication {
 
 					if (!answer.equals("y")) {
 						movieTime = false;
+						System.out.println("I hope you found the movie you were looking for!");
 					}
 				} else {
 					System.out.println("Sorry, we don't have that genre. Please try again.");
@@ -87,14 +93,22 @@ public class MovieApplication {
 
 	public static List<Movie> allMoviesList() {
 		ArrayList<Movie> allMovies = new ArrayList<>();
+		
 		boolean checkMovie = true;
-
+		int i = 1;
+		
 		while (checkMovie) {
-			int i = 1;
-			if (!MovieIO.getMovie(i).getMovieName().equals("NO SUCH MOVIE")) {
+			Movie movie = MovieIO.getMovie(i);
+			
+			if (movie.getMovieName().equals("NO SUCH MOVIE")) {
+				checkMovie = false;
+			} else {
 				allMovies.add(MovieIO.getMovie(i));
 			}
+			
+			i++;
 		}
+		
 		return allMovies;
 	}
 
